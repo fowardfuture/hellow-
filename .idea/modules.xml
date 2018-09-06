@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app-service/app-service.iml" filepath="$PROJECT_DIR$/app-service/app-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/domain-core/domain-core.iml" filepath="$PROJECT_DIR$/domain-core/domain-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/future-mybatis-parent.iml" filepath="$PROJECT_DIR$/future-mybatis-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/integration-dal/integration-dal.iml" filepath="$PROJECT_DIR$/integration-dal/integration-dal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/print-service/print-service.iml" filepath="$PROJECT_DIR$/print-service/print-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+    </modules>
+  </component>
+</project>

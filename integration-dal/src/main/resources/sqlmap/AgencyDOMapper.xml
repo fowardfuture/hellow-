@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuhu.future.mybatis.integration.dal.mapper.AgencyDOMapper">
+  <resultMap id="BaseResultMap" type="com.tuhu.future.mybatis.integration.dal.dataobject.AgencyDO">
+    <id column="agency_id" jdbcType="INTEGER" property="agencyId" />
+    <result column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
+    <result column="agency_is_delete" jdbcType="INTEGER" property="agencyIsDelete" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    agency_id, employee_id, department_id, agency_is_delete
+  </sql>
+  <select id="selectByExample" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.AgencyDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_agency
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_agency
+    where agency_id = #{agencyId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_agency
+    where agency_id = #{agencyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.AgencyDOExample">
+    delete from tb_agency
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="selectByDepartId" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_agency where department_id = #{departId,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.AgencyDO">
+    insert into tb_agency (agency_id, employee_id, department_id, 
+      agency_is_delete)
+    values (#{agencyId,jdbcType=INTEGER}, #{employeeId,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, 
+      #{agencyIsDelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.AgencyDO">
+    insert into tb_agency
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="agencyId != null">
+        agency_id,
+      </if>
+      <if test="employeeId != null">
+        employee_id,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="agencyIsDelete != null">
+        agency_is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="agencyId != null">
+        #{agencyId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="agencyIsDelete != null">
+        #{agencyIsDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.AgencyDOExample" resultType="java.lang.Long">
+    select count(*) from tb_agency
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.AgencyDO">
+    update tb_agency
+    <set>
+      <if test="employeeId != null">
+        employee_id = #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="agencyIsDelete != null">
+        agency_is_delete = #{agencyIsDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where agency_id = #{agencyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.AgencyDO">
+    update tb_agency
+    set employee_id = #{employeeId,jdbcType=INTEGER},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      agency_is_delete = #{agencyIsDelete,jdbcType=INTEGER}
+    where agency_id = #{agencyId,jdbcType=INTEGER}
+  </update>
+  <select id="selectNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(*) from tb_agency
+  </select>
+</mapper>

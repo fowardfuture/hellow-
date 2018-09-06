@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuhu.future.mybatis.integration.dal.mapper.OrderDOMapper">
+  <resultMap id="BaseResultMap" type="com.tuhu.future.mybatis.integration.dal.dataobject.OrderDO">
+    <id column="order_history_id" jdbcType="INTEGER" property="orderHistoryId" />
+    <result column="dishes_id" jdbcType="INTEGER" property="dishesId" />
+    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
+    <result column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+    <result column="order_create_time" jdbcType="TIMESTAMP" property="orderCreateTime" />
+    <result column="order_update_time" jdbcType="TIMESTAMP" property="orderUpdateTime" />
+    <result column="order_is_delete" jdbcType="INTEGER" property="orderIsDelete" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    order_history_id, dishes_id, department_id, employee_id, order_status, order_create_time, 
+    order_update_time, order_is_delete
+  </sql>
+  <select id="selectByExample" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.OrderDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_order_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_order_history
+    where order_history_id = #{orderHistoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_order_history
+    where order_history_id = #{orderHistoryId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.OrderDOExample">
+    delete from tb_order_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.OrderDO">
+    insert into tb_order_history (order_history_id, dishes_id, department_id, 
+      employee_id, order_status, order_create_time, 
+      order_update_time, order_is_delete)
+    values (#{orderHistoryId,jdbcType=INTEGER}, #{dishesId,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, 
+      #{employeeId,jdbcType=INTEGER}, #{orderStatus,jdbcType=INTEGER}, #{orderCreateTime,jdbcType=TIMESTAMP}, 
+      #{orderUpdateTime,jdbcType=TIMESTAMP}, #{orderIsDelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.OrderDO">
+    insert into tb_order_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderHistoryId != null">
+        order_history_id,
+      </if>
+      <if test="dishesId != null">
+        dishes_id,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="employeeId != null">
+        employee_id,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="orderCreateTime != null">
+        order_create_time,
+      </if>
+      <if test="orderUpdateTime != null">
+        order_update_time,
+      </if>
+      <if test="orderIsDelete != null">
+        order_is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderHistoryId != null">
+        #{orderHistoryId,jdbcType=INTEGER},
+      </if>
+      <if test="dishesId != null">
+        #{dishesId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orderCreateTime != null">
+        #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdateTime != null">
+        #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderIsDelete != null">
+        #{orderIsDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.OrderDOExample" resultType="java.lang.Long">
+    select count(*) from tb_order_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.OrderDO">
+    update tb_order_history
+    <set>
+      <if test="dishesId != null">
+        dishes_id = #{dishesId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeId != null">
+        employee_id = #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orderCreateTime != null">
+        order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdateTime != null">
+        order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderIsDelete != null">
+        order_is_delete = #{orderIsDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where order_history_id = #{orderHistoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.OrderDO">
+    update tb_order_history
+    set dishes_id = #{dishesId,jdbcType=INTEGER},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      employee_id = #{employeeId,jdbcType=INTEGER},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP},
+      order_is_delete = #{orderIsDelete,jdbcType=INTEGER}
+    where order_history_id = #{orderHistoryId,jdbcType=INTEGER}
+  </update>
+
+  <update id="cancleOrder" parameterType="java.lang.Integer">
+    UPDATE tb_order_history
+    SET order_status = 2
+    WHERE order_history_id = #{orderHistoryId};
+  </update>
+
+  <select id="checkOrder" resultMap="BaseResultMap">
+    SELECT order_history_id FROM tb_order_history t WHERE
+    t.order_status = #{order_status} AND t.employee_id = #{employeeId}
+  </select>
+
+  <select id="selectOrder" parameterType="com.tuhu.future.mybatis.integration.dal.dataobject.OrderQureyDTO" resultType="com.tuhu.future.mybatis.integration.dal.dataobject.OrderResultDTO">
+    select
+    h.department_id,d.dishe_name,de.depart_name,e.employee_name,h.order_status,h.order_status
+    from tb_order_history h,tb_employ e,tb_department de,tb_dishes d
+    where h.dishes_id = d.dishe_id
+    and h.department_id = de.depart_id
+    and h.employee_id = e.employee_id
+    <if test="employeeId != null">
+      and h.employee_id = #{employeeId}
+    </if>
+    <if test="departmentId !=null">
+      and  h.department_id = #{department_id}
+    </if>
+    <if test="orderHistoryId !=null">
+      and h.order_history_id = #{orderHistoryId}
+    </if>
+    <if test="dishesId !=null">
+      and h.dishes_id = #{dishesId}
+    </if>
+    <if test="orderStatus !=null">
+      and h.order_status = #{orderStatus}
+    </if>
+    <if test="begintime != null and begintime != ''">
+      and h.order_create_time <![CDATA[>=]]> DATE_FORMAT(#{begintime}, '%Y-%m-%d')
+    </if>
+    <if test="endtime != null and endtime != ''">
+      and h.order_create_time <![CDATA[<=]]> DATE_FORMAT(#{endtime}, '%Y-%m-%d')
+    </if>
+
+  </select>
+
+  <select id="selectAgenceByApartId" parameterType="Integer" resultType="String">
+    select
+     em.employee_name
+    from tb_agency a,tb_department d,tb_employ em
+    where a.department_id = d.depart_id
+          and a.agency_id = em.employee_id
+          and a.department_id = #{department_id}
+  </select>
+
+  <select id="selectAgencyByid" parameterType="Integer" resultType="String">
+    select
+     em.employee_name
+    from tb_agency a,tb_employ em
+     where
+     a.agency_id = em.employee_id
+     and a.employee_id = #{employee_id}
+  </select>
+
+</mapper>
